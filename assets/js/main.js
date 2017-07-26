@@ -4,6 +4,18 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+// post data to google sheets when user clicks
+function postToGoogleSheets(){
+	var email = encodeURIComponent($('#email').val());
+    var ansID = "entry.706696076";
+    var baseURL = 'https://docs.google.com/forms/d/e/1FAIpQLSc05HmQDkHEoT0Dq9udrsNJJ1wvvGXDPn3F8N6qjVw-1KxBQw/formResponse?';
+    var submitRef = '&submit=7588322602044403867';
+    var submitURL = (baseURL + ansID + "=" + email + submitRef);
+	document.getElementById("signup-form").action=submitURL;
+	//console.log(submitURL);
+	document.getElementById("signup-form").submit();
+}
+
 (function() {
 
 	"use strict";
@@ -104,13 +116,13 @@
 
 		})();
 
-	// Signup Form.
+	// Signup Form.	
 		(function() {
 
 			// Vars.
 				var $form = document.querySelectorAll('#signup-form')[0],
 					$submit = document.querySelectorAll('#signup-form input[type="submit"]')[0],
-					$message;
+					$message;					
 
 			// Bail if addEventListener isn't supported.
 				if (!('addEventListener' in $form))
@@ -139,6 +151,7 @@
 
 			// Events.
 			// Note: If you're *not* using AJAX, get rid of this event listener.
+				
 				$form.addEventListener('submit', function(event) {
 
 					event.stopPropagation();
@@ -162,8 +175,12 @@
 								$submit.disabled = false;
 
 							// Show message.
-								$message._show('success', 'Thank you!');
-								//$message._show('failure', 'Something went wrong. Please try again.');
+								if(document.getElementById("signup-form").action != "#") {
+									$message._show('success', 'Thank you!');
+								} else {
+									$message._show('failure', 'Something went wrong. Please try again.');
+								}
+								
 
 						}, 750);
 
