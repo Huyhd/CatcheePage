@@ -13,6 +13,7 @@ function postToGoogleSheets(){
     var submitURL = (baseURL + ansID + "=" + email + submitRef);
 	document.getElementById("signup-form").action=submitURL;
 	document.getElementById("signup-form").submit();
+	document.getElementById("signup-form").reset();
 }
 
 (function() {
