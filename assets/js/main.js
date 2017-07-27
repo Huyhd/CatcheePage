@@ -12,7 +12,6 @@ function postToGoogleSheets(){
     var submitRef = '&submit=7588322602044403867';
     var submitURL = (baseURL + ansID + "=" + email + submitRef);
 	document.getElementById("signup-form").action=submitURL;
-	//console.log(submitURL);
 	document.getElementById("signup-form").submit();
 }
 
