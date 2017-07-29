@@ -4,16 +4,30 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+// get user input
+var email = "";
+
 // post data to google sheets when user clicks
 function postToGoogleSheets(){
-	var email = encodeURIComponent($('#email').val());
-    var ansID = "entry.706696076";
-    var baseURL = 'https://docs.google.com/forms/d/e/1FAIpQLSc05HmQDkHEoT0Dq9udrsNJJ1wvvGXDPn3F8N6qjVw-1KxBQw/formResponse?';
-    var submitRef = '&submit=7588322602044403867';
-    var submitURL = (baseURL + ansID + "=" + email + submitRef);
-	document.getElementById("signup-form").action=submitURL;
-	document.getElementById("signup-form").submit();
-	document.getElementById("signup-form").reset();
+	email = $('#email').val();
+	if(validateEmail(email)) {
+		var encodedEmail = encodeURIComponent(email);
+    	var ansID = "entry.706696076";
+    	var baseURL = 'https://docs.google.com/forms/d/e/1FAIpQLSc05HmQDkHEoT0Dq9udrsNJJ1wvvGXDPn3F8N6qjVw-1KxBQw/formResponse?';
+    	var submitRef = '&submit=7588322602044403867';
+    	var submitURL = (baseURL + ansID + "=" + encodedEmail + submitRef);
+		document.getElementById("signup-form").action=submitURL;
+		document.getElementById("signup-form").submit();
+		document.getElementById("signup-form").reset();
+	} else {
+		document.getElementById("signup-form").reset();
+	}
+}
+
+// validate email
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
 }
 
 (function() {
@@ -174,11 +188,11 @@ function postToGoogleSheets(){
 							// Enable submit.
 								$submit.disabled = false;
 
-							// Show message.
-								if(document.getElementById("signup-form").action != "#") {
+							// Show message.								
+								if(validateEmail(email)) {
 									$message._show('success', 'Thank you!');
 								} else {
-									$message._show('failure', 'Something went wrong. Please try again.');
+									$message._show('failure', 'Invalid email address. Please try again!');
 								}
 								
 
